@@ -1,0 +1,17 @@
+export const businessTypes = [
+  "Restaurant",
+  "Coffee Shop",
+  "Portfolio",
+  "Gym",
+  "Real Estate",
+  "Hospital",
+  "School",
+  "Travel Agency",
+  "E-commerce",
+  "Fashion Brand",
+  "Digital Agency",
+  "Software House",
+  "Construction",
+  "Beauty Salon",
+  "Furniture",
+];

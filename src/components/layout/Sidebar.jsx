@@ -51,9 +51,7 @@ function Sidebar() {
   const handleLogout = async () => {
     try {
       await logout();
-
       toast.success("Logged out successfully");
-
       navigate("/");
     } catch (error) {
       toast.error(error.message || "Logout failed");
@@ -68,67 +66,50 @@ function Sidebar() {
 
   return (
     <>
-      {/* =========================
-          BACKDROP / CONTENT BLOCK
-      ========================== */}
+      {/* Mobile overlay */}
       {isOpen && (
         <button
           type="button"
           aria-label="Close sidebar"
           onClick={toggleSidebar}
           className="
-            fixed inset-0
+            fixed
+            inset-0
             z-[60]
             bg-black/65
             backdrop-blur-[3px]
-            lg:block
+            lg:hidden
           "
         />
       )}
 
-      {/* =========================
-          SIDEBAR DRAWER
-      ========================== */}
+      {/* Sidebar */}
       <aside
         className={`
           fixed
           left-0
           top-16
           z-[70]
-
           flex
           h-[calc(100vh-4rem)]
           w-[240px]
           flex-col
-
           overflow-hidden
-
           border-r
           border-white/5
-
           bg-[#0A0A0D]
-
           shadow-2xl
           shadow-black/40
-
           transform
           transition-transform
           duration-300
           ease-out
-
-          ${
-            isOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
-          }
-
           lg:translate-x-0
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        {/* =========================
-            BRAND
-        ========================== */}
-        <div className="shrink-0 border-b border-white/5 px-5 py-5">
+        {/* Brand - desktop only */}
+        <div className="hidden shrink-0 border-b border-white/5 px-5 py-5 lg:block">
           <div className="flex items-center gap-3">
             <div
               className="
@@ -162,9 +143,7 @@ function Sidebar() {
           </div>
         </div>
 
-        {/* =========================
-            NAVIGATION
-        ========================== */}
+        {/* Navigation */}
         <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-5">
           <p
             className="
@@ -190,70 +169,26 @@ function Sidebar() {
                   to={item.path}
                   onClick={handleNavigation}
                   className={({ isActive }) =>
-                    `
-                      group
-                      flex
-                      h-11
-                      items-center
-                      gap-3
-                      rounded-xl
-                      px-3.5
-                      text-sm
-                      font-medium
-                      transition-all
-                      duration-200
-
-                      ${
-                        isActive
-                          ? `
-                            bg-linear-to-r
-                            from-violet-600/20
-                            to-fuchsia-500/10
-                            text-white
-                            ring-1
-                            ring-violet-500/20
-                          `
-                          : `
-                            text-zinc-500
-                            hover:bg-white/5
-                            hover:text-zinc-200
-                          `
-                      }
-                    `
+                    `group flex h-11 items-center gap-3 rounded-xl px-3.5 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-linear-to-r from-violet-600/20 to-fuchsia-500/10 text-white ring-1 ring-violet-500/20"
+                        : "text-zinc-500 hover:bg-white/5 hover:text-zinc-200"
+                    }`
                   }
                 >
                   {({ isActive }) => (
                     <>
                       <span
-                        className={`
-                          flex
-                          h-8
-                          w-8
-                          shrink-0
-                          items-center
-                          justify-center
-                          rounded-lg
-                          transition
-
-                          ${
-                            isActive
-                              ? `
-                                bg-violet-600/20
-                                text-violet-300
-                              `
-                              : `
-                                text-zinc-500
-                                group-hover:text-zinc-200
-                              `
-                          }
-                        `}
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition ${
+                          isActive
+                            ? "bg-violet-600/20 text-violet-300"
+                            : "text-zinc-500 group-hover:text-zinc-200"
+                        }`}
                       >
                         <Icon size={18} />
                       </span>
 
-                      <span className="truncate">
-                        {item.title}
-                      </span>
+                      <span className="truncate">{item.title}</span>
                     </>
                   )}
                 </NavLink>
@@ -262,11 +197,73 @@ function Sidebar() {
           </div>
         </nav>
 
-        {/* =========================
-            BOTTOM AREA
-        ========================== */}
+        {/* Bottom section */}
         <div className="shrink-0 border-t border-white/5 p-3">
-          {/* USER */}
+
+          {/* Upgrade - directly ABOVE user/Gmail */}
+          <div
+            className="
+              mb-3
+              rounded-2xl
+              border
+              border-violet-500/20
+              bg-linear-to-br
+              from-violet-600/15
+              via-fuchsia-500/10
+              to-transparent
+              p-3.5
+            "
+          >
+            <div className="flex items-center gap-2.5">
+              <div
+                className="
+                  flex
+                  h-8
+                  w-8
+                  shrink-0
+                  items-center
+                  justify-center
+                  rounded-lg
+                  bg-violet-600/20
+                  text-violet-300
+                "
+              >
+                <HiSparkles size={16} />
+              </div>
+
+              <span className="text-sm font-semibold text-white">
+                Pro
+              </span>
+            </div>
+
+            <p className="mt-2 text-xs leading-4 text-zinc-500">
+              Unlock advanced AI tools and premium features.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => navigate("/pricing")}
+              className="
+                mt-3
+                w-full
+                rounded-xl
+                bg-linear-to-r
+                from-violet-600
+                to-fuchsia-500
+                py-2.5
+                text-sm
+                font-semibold
+                text-white
+                transition
+                hover:opacity-90
+                active:scale-[0.98]
+              "
+            >
+              Upgrade
+            </button>
+          </div>
+
+          {/* User / Gmail */}
           {user && (
             <div
               className="
@@ -314,7 +311,7 @@ function Sidebar() {
             </div>
           )}
 
-          {/* LOGOUT */}
+          {/* Logout */}
           {user && (
             <button
               type="button"
@@ -345,87 +342,6 @@ function Sidebar() {
           )}
         </div>
       </aside>
-
-      {/* =========================
-          FIXED UPGRADE CARD
-          DOES NOT SLIDE
-      ========================== */}
-      {isOpen && (
-        <div
-          className="
-            fixed
-            bottom-3
-            left-3
-            z-[80]
-            w-[216px]
-
-            rounded-2xl
-            border
-            border-violet-500/20
-
-            bg-[#151018]/95
-
-            p-3.5
-
-            shadow-2xl
-            shadow-black/40
-
-            backdrop-blur-xl
-
-            lg:hidden
-          "
-        >
-          <div className="flex items-center gap-2.5">
-            <div
-              className="
-                flex
-                h-8
-                w-8
-                items-center
-                justify-center
-                rounded-lg
-                bg-violet-600/20
-                text-violet-300
-              "
-            >
-              <HiSparkles size={16} />
-            </div>
-
-            <span className="text-sm font-semibold text-white">
-              Pro
-            </span>
-          </div>
-
-          <p className="mt-2 text-xs leading-4 text-zinc-500">
-            Unlock advanced AI tools and premium features.
-          </p>
-
-          <button
-            type="button"
-            onClick={() => {
-              navigate("/pricing");
-              toggleSidebar();
-            }}
-            className="
-              mt-3
-              w-full
-              rounded-xl
-              bg-linear-to-r
-              from-violet-600
-              to-fuchsia-500
-              py-2.5
-              text-sm
-              font-semibold
-              text-white
-              transition
-              hover:opacity-90
-              active:scale-[0.98]
-            "
-          >
-            Upgrade
-          </button>
-        </div>
-      )}
     </>
   );
 }

@@ -887,8 +887,7 @@ function AIGenerator() {
                           </div>
 
 
-                          <div className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/80 px-4 py-4 text-sm leading-7 text-zinc-200 shadow-lg sm:px-6 sm:py-5 sm:text-base">
-
+                          <div className="overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/80 px-4 py-4 text-base leading-7 text-zinc-200 shadow-lg sm:px-6 sm:py-5 sm:text-base">
                             <MessageContent
                               content={
                                 message.content
